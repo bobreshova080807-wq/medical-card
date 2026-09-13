@@ -31,4 +31,24 @@ public final class Medicine {
         return ingredient;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        if (obj == null || obj.getClass() != this.getClass()) return false;
+        var that = (Medicine) obj;
+        return Objects.equals(this.name, that.name) &&
+                Objects.equals(this.ingredient, that.ingredient);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, ingredient);
+    }
+
+    @Override
+    public String toString() {
+        return "Medicine[" +
+                "name=" + name + ", " +
+                "ingredient=" + ingredient + ']';
+    }
 }

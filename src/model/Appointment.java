@@ -22,6 +22,34 @@ public final class Appointment {
         return date.plus(doctor.getSpecialty().getTime());
     }
 
+    public Patient getPatient() {
+        return patient;
+    }
 
+    public Doctor getDoctor() {
+        return doctor;
+    }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        if (obj == null || obj.getClass() != this.getClass()) return false;
+        var that = (Appointment) obj;
+        return Objects.equals(this.date, that.date) &&
+                Objects.equals(this.patient, that.patient) &&
+                Objects.equals(this.doctor, that.doctor);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(date, patient, doctor);
+    }
+
+    @Override
+    public String toString() {
+        return "Appointment[" +
+                "startDateTime=" + date + ", " +
+                "patient=" + patient.getName() + ", " +
+                "doctor=" + doctor.getName() + ']';
+    }
 }
