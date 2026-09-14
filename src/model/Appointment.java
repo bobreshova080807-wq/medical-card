@@ -1,14 +1,14 @@
 package model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public final class Appointment {
-    private final LocalDate date;
+    private final LocalDateTime date;
     private final Patient patient;
     private final Doctor doctor;
 
-    public Appointment(LocalDate date, Patient patient, Doctor doctor){
+    public Appointment(LocalDateTime date, Patient patient, Doctor doctor){
         Objects.requireNonNull(date, "Дата приема не может быть пустым.");
         Objects.requireNonNull(patient, "Имя пациента не может быть пустым.");
         Objects.requireNonNull(doctor, "Имя врача не может быть пустым.");
@@ -18,7 +18,11 @@ public final class Appointment {
         this.doctor = doctor;
     }
 
-    public LocalDate getDate(){
+    public LocalDateTime getStartDateTime(){
+        return date;
+    }
+
+    public LocalDateTime getEndDateTime(){
         return date.plus(doctor.getSpecialty().getTime());
     }
 
