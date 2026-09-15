@@ -21,6 +21,7 @@ public final class PrescriptionRecord implements MedicalRecord{
         return date;
     }
 
+
     public Prescription getPrescriptionText(){
         return prescription;
     }

@@ -14,7 +14,8 @@ public enum Specialty {
     SURGEON("305", Duration.ofMinutes(20)),
     ALLERGIST("107", Duration.ofMinutes(15)),
     NARCOLOGIST("301", Duration.ofMinutes(15)),
-    DERMATOLOGIST("216", Duration.ofMinutes(10));
+    DERMATOLOGIST("216", Duration.ofMinutes(10)),
+    GASTROENTEROLOGIST("502",Duration.ofMinutes(60));
 
 
     private final String cabinet;

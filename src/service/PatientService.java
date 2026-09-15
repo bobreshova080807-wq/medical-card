@@ -39,7 +39,7 @@ public class PatientService {
         LocalDateTime endDateTime = dayAppointment.plus(doctor.getSpecialty().getTime());
         LocalTime endTime = endDateTime.toLocalTime();
 
-        if (startTime.isBefore(workStart) || endTime.isAfter(endTime)) {
+        if (startTime.isBefore(workStart) || endTime.isAfter(workEnd)) {
             throw new ConflictExclusion(
                     String.format(
                             "Ваш прием выходит за рабочие часы работы кабинет: %s (с %s до %s)." +
