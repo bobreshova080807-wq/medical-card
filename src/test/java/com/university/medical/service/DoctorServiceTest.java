@@ -27,7 +27,7 @@ class DoctorServiceTest {
     }
 
     @Test
-    void conductVisit_createsVisitWithDiagnosisAndPrescriptions() {
+    void conductVisit_visitWithDiagnosisAndPrescriptions() {
         Visit visit = doctorService.conductVisit(
                 LocalDateTime.of(2026, 9, 15, 10, 0),
                 doctor1,
@@ -46,7 +46,7 @@ class DoctorServiceTest {
     }
 
     @Test
-    void getActivePrescriptions_returnsOnlyActiveOnDate() {
+    void getActivePrescriptions_activeOnDate() {
 
         doctorService.conductVisit(
                 LocalDateTime.of(2026, 9, 15, 10, 0),
@@ -71,7 +71,7 @@ class DoctorServiceTest {
     }
 
     @Test
-    void getActivePrescriptions_emptyWhenNoActive() {
+    void getActivePrescriptions_noActive() {
 
         doctorService.conductVisit(
                 LocalDateTime.of(2026, 9, 15, 10, 0),
@@ -89,7 +89,7 @@ class DoctorServiceTest {
     }
 
     @Test
-    void findIntersectingPrescriptions_detectsSameIngredient() {
+    void detectsSameIngredient() {
 
         doctorService.conductVisit(
                 LocalDateTime.of(2026, 9, 15, 10, 0),
@@ -113,7 +113,7 @@ class DoctorServiceTest {
     }
 
     @Test
-    void findIntersectingPrescriptions_noIntersectionWhenDifferentIngredients() {
+    void noIntersectionWhenDifferentIngredients() {
 
         doctorService.conductVisit(
                 LocalDateTime.of(2026, 9, 15, 10, 0),

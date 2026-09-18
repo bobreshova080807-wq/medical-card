@@ -34,7 +34,7 @@ class PatientServiceTest {
     @Test
     void bookAppointment_success() {
         Appointment apt = patientService.bookAppointment(
-                        LocalDateTime.of(2026, 9, 15, 10, 0),
+                LocalDateTime.of(2026, 9, 15, 10, 0),
                 patient1,
                 doctor1
                 );
@@ -45,7 +45,7 @@ class PatientServiceTest {
     }
 
     @Test
-    void bookAppointment_conflict_sameDoctorSameTime() {
+    void bookAppointment_sameDoctorSameTime() {
         patientService.bookAppointment(
                 LocalDateTime.of(2026, 9, 15, 10, 0),
                 patient1,
@@ -64,7 +64,7 @@ class PatientServiceTest {
     }
 
     @Test
-    void bookAppointment_conflict_beforeWorkingHours() {
+    void bookAppointment_beforeWorkingHours() {
         assertThrows(
                 ConflictExclusion.class,
                 () -> patientService.bookAppointment(
@@ -75,7 +75,7 @@ class PatientServiceTest {
     }
 
     @Test
-    void bookAppointment_conflict_afterWorkingHours() {
+    void bookAppointment_afterWorkingHours() {
         assertThrows(
                 ConflictExclusion.class,
                 () -> patientService.bookAppointment(
@@ -87,7 +87,7 @@ class PatientServiceTest {
     }
 
     @Test
-    void bookAppointment_backToBack_success() {
+    void bookAppointment_backToBack_success() { //впритык
         patientService.bookAppointment(
                 LocalDateTime.of(2026, 9, 15, 10, 0),
                 patient1,
@@ -104,7 +104,7 @@ class PatientServiceTest {
     }
 
     @Test
-    void getPatientAppointments_returnsFilteredByPeriod() {
+    void getPatientAppointments_filterPeriod() {
 
         patientService.bookAppointment(LocalDateTime.of(2026, 9, 14, 10, 0), patient1, doctor1);
         patientService.bookAppointment(LocalDateTime.of(2026, 9, 15, 10, 0), patient1, doctor1);
@@ -120,7 +120,7 @@ class PatientServiceTest {
     }
 
     @Test
-    void getPatientAppointments_emptyForPeriodWithNoAppointments() {
+    void getPatientAppointments_filterPeriodNoAppointments() {
 
         List<Appointment> history = patientService.patientHistory(
                 patient1,

@@ -21,7 +21,7 @@ public class Demo {
         Patient patient1 = new Patient("Иванов Иван Иванович", "3478900753217465", LocalDate.of(2000, 10,10));
         Patient patient2 = new Patient("Петрова Анастасия Александровна", "8769000127589023", LocalDate.of(2008, 11,23));
         Patient patient3 = new Patient("Кузнецов Игорь Ватальевич", "7890003648997865", LocalDate.of(1987, 3,30));
-        Patient patient4 = new Patient("Заяцева Мария Викторовна", "2789655778993302", LocalDate.of(1966, 2,15));
+        Patient patient4 = new Patient("Зайцева Мария Викторовна", "2789655778993302", LocalDate.of(1966, 2,15));
         Patient patient5 = new Patient("Артемов Александр Александрович", "1787665983200987", LocalDate.of(2002, 5,1));
 
         Doctor doctor1 = new Doctor("Лобанов Семен Семенович", "7649", Specialty.OPHTHALMOLOGIST);

@@ -40,7 +40,7 @@ class ModelTest {
     }
 
     @Test
-    void prescription_rightDate_withinPeriod() {
+    void prescription_rightDate_withPeriod() {
         Medicine med = new Medicine("Тест", "test");
         Prescription p = new Prescription(med, LocalDate.of(2026, 9, 15), 5, 3);
 
@@ -50,7 +50,7 @@ class ModelTest {
     }
 
     @Test
-    void prescription_rightDate_outsidePeriod() {
+    void prescription_rightDate_withNoPeriod() {
         Medicine med = new Medicine("Тест", "test");
         Prescription p = new Prescription(med, LocalDate.of(2026, 9, 15), 5, 3);
 
