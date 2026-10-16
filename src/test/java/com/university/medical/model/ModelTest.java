@@ -1,13 +1,17 @@
 package com.university.medical.model;
 
 import org.junit.jupiter.api.Test;
-
 import java.time.LocalDate;
-
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Тесты для моделей: equals/hashCode, валидация.
+ */
 class ModelTest {
 
+    /**
+     * Тест равенства пациентов с одинаковыми данными.
+     */
     @Test
     void patient_equalsAndHashCode_samePolicy() {
         Patient p1 = new Patient("111", "Иванов", LocalDate.of(1990, 1, 1));
@@ -17,6 +21,9 @@ class ModelTest {
         assertEquals(p1.hashCode(), p2.hashCode());
     }
 
+    /**
+     * Тест неравенства пациентов с разными полисами.
+     */
     @Test
     void patient_equalsAndHashCode_differentPolicy() {
         Patient p1 = new Patient("111", "Иванов", LocalDate.of(1990, 1, 1));
@@ -25,6 +32,9 @@ class ModelTest {
         assertNotEquals(p1, p2);
     }
 
+    /**
+     * Тест выброса исключения при null полисе.
+     */
     @Test
     void patient_throwsOnNullPolicy() {
         assertThrows(NullPointerException.class, () ->
@@ -32,6 +42,9 @@ class ModelTest {
         );
     }
 
+    /**
+     * Тест выброса исключения при пустом полисе.
+     */
     @Test
     void patient_throwsOnBlankPolicy() {
         assertThrows(IllegalArgumentException.class, () ->
@@ -39,6 +52,9 @@ class ModelTest {
         );
     }
 
+    /**
+     * Тест активности назначения в период курса.
+     */
     @Test
     void prescription_rightDate_withPeriod() {
         Medicine med = new Medicine("Тест", "test");
@@ -49,6 +65,9 @@ class ModelTest {
         assertTrue(p.rightDate(LocalDate.of(2026, 9, 19)));
     }
 
+    /**
+     * Тест неактивности назначения вне периода курса.
+     */
     @Test
     void prescription_rightDate_withNoPeriod() {
         Medicine med = new Medicine("Тест", "test");
@@ -58,6 +77,9 @@ class ModelTest {
         assertFalse(p.rightDate(LocalDate.of(2026, 9, 20)));
     }
 
+    /**
+     * Тест выброса исключения при нулевой длительности курса.
+     */
     @Test
     void prescription_throwsOnZeroDays() {
         Medicine med = new Medicine("Тест", "test");

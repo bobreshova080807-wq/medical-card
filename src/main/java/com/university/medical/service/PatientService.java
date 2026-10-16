@@ -13,12 +13,32 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Сервис для записи пациентов на приём.
+ *
+ * <p>Отвечает за:
+ * <ul>
+ *   <li>Проверку рабочих часов кабинета</li>
+ *   <li>Проверку занятости врача</li>
+ *   <li>Создание записей на приём</li>
+ *   <li>Получение истории записей пациента</li>
+ * </ul>
+ */
 public class PatientService {
 
     private final LocalTime workStart = LocalTime.of(8, 0);
     private final LocalTime workEnd = LocalTime.of(19, 0);
     private final List<Appointment> appointments = new ArrayList<>();
 
+    /**
+     * Записывает пациента на приём к врачу.
+     *
+     * @param dayAppointment дата и время начала приёма
+     * @param patient        пациент
+     * @param doctor         врач
+     * @return созданная запись на приём
+     * @throws ConflictExclusion если есть конфликт расписания
+     */
 
     public Appointment bookAppointment(
             LocalDateTime dayAppointment,
@@ -36,6 +56,13 @@ public class PatientService {
 
     }
 
+    /**
+     * Проверяет, не выходит ли приём за рабочие часы.
+     *
+     * @param dayAppointment дата и время начала
+     * @param doctor         врач
+     * @throws ConflictExclusion если приём вне рабочих часов
+     */
     private void workingHours(LocalDateTime dayAppointment, Doctor doctor) {
         LocalTime startTime = dayAppointment.toLocalTime();
         LocalDateTime endDateTime = dayAppointment.plus(doctor.specialty().getTime());
@@ -56,6 +83,14 @@ public class PatientService {
             );
         }
     }
+
+    /**
+     * Проверяет, не занят ли врач в указанное время.
+     *
+     * @param dayAppointment дата и время начала
+     * @param doctor         врач
+     * @throws ConflictExclusion если врач занят
+     */
 
     private void doctorEmployment(LocalDateTime dayAppointment, Doctor doctor) {
         LocalDateTime start = dayAppointment;
@@ -92,6 +127,15 @@ public class PatientService {
 
     }
 
+    /**
+     * Возвращает историю записей пациента за период.
+     *
+     * @param patient        пациент
+     * @param startPeriod    начало периода (включительно)
+     * @param endPeriod      конец периода (включительно)
+     * @return неизменяемый список записей за период
+     */
+
     public List<Appointment> patientHistory(Patient patient, LocalDate startPeriod, LocalDate endPeriod) {
 
         List<Appointment> result = new ArrayList<>();
@@ -113,6 +157,11 @@ public class PatientService {
 
     }
 
+    /**
+     * Возвращает все записи на приём.
+     *
+     * @return неизменяемый список всех записей
+     */
     public List<Appointment> allAppointments(){
         return Collections.unmodifiableList(appointments);
     }

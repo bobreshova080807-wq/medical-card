@@ -2,12 +2,27 @@ package com.university.medical.model;
 
 import java.time.LocalDate;
 import java.util.Objects;
+/**
+ * Пациент медицинской карты.
+ * Идентифицируется номером полиса ОМС.
+ *
+ * @param name      полное имя пациента
+ * @param policy    номер полиса ОМС
+ * @param birthday  дата рождения
+ */
 
 public record Patient(
     String name,
     String policy,
     LocalDate birthday
-){
+) {
+    /**
+     * Компактный конструктор с валидацией полей.
+     * Проверяет, что все поля не null и не пустые.
+     *
+     * @throws NullPointerException     если любое поле null
+     * @throws IllegalArgumentException если name или policy пустые
+     */
     public Patient {
 
         Objects.requireNonNull(name, "Имя пациента не может быть пустым.");

@@ -1,7 +1,11 @@
 package com.university.medical.model;
 
-
 import java.time.Duration;
+
+/**
+ * Перечисление специальностей врачей.
+ * Каждая специальность имеет номер кабинета и стандартную длительность приёма.
+ */
 
 public enum Specialty {
 
@@ -21,16 +25,33 @@ public enum Specialty {
     private final String cabinet;
     private final Duration time;
 
+    /**
+     * Конструктор специальности.
+     *
+     * @param cabinet   номер кабинета
+     * @param time      длительность приёма
+     */
+
     Specialty(String cabinet, Duration time){
 
         this.cabinet = cabinet;
         this.time = time;
     }
 
+    /**
+     * Возвращает номер кабинета.
+     *
+     * @return номер кабинета
+     */
     public String getCabinet() {
         return cabinet;
     }
 
+    /**
+     * Возвращает длительность приёма.
+     *
+     * @return длительность приёма
+     */
     public Duration getTime() {
         return time;
     }

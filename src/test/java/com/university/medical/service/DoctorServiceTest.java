@@ -11,6 +11,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Тесты для DoctorService.
+ */
 class DoctorServiceTest {
 
     private DoctorService doctorService;
@@ -18,6 +21,9 @@ class DoctorServiceTest {
     private Patient patient2;
     private Doctor doctor1;
 
+    /**
+     * Подготовка тестовых данных перед каждым тестом.
+     */
     @BeforeEach
     void setUp() {
         doctorService = new DoctorService();
@@ -26,6 +32,9 @@ class DoctorServiceTest {
         doctor1 = new Doctor("D1", "Смирнов А.П.", Specialty.THERAPIST);
     }
 
+    /**
+     * Тест создания визита с диагнозом и назначениями.
+     */
     @Test
     void conductVisit_visitWithDiagnosisAndPrescriptions() {
         Visit visit = doctorService.conductVisit(
@@ -45,6 +54,9 @@ class DoctorServiceTest {
         assertEquals(1, visit.getPrescriptionRecord().size());
     }
 
+    /**
+     * Тест получения только активных назначений на дату.
+     */
     @Test
     void getActivePrescriptions_activeOnDate() {
 
@@ -70,6 +82,9 @@ class DoctorServiceTest {
         assertEquals("Омега-3", active.get(0).medicine().name());
     }
 
+    /**
+     * Тест пустого списка активных назначений.
+     */
     @Test
     void getActivePrescriptions_noActive() {
 
@@ -88,6 +103,9 @@ class DoctorServiceTest {
         assertTrue(active.isEmpty());
     }
 
+    /**
+     * Тест обнаружения пересечений по активному веществу.
+     */
     @Test
     void detectsSameIngredient() {
 
@@ -112,6 +130,9 @@ class DoctorServiceTest {
         assertEquals(1, intersections.size());
     }
 
+    /**
+     * Тест отсутствия пересечений при разных активных веществах.
+     */
     @Test
     void noIntersectionWhenDifferentIngredients() {
 
@@ -136,6 +157,9 @@ class DoctorServiceTest {
         assertTrue(intersections.isEmpty());
     }
 
+    /**
+     * Тест фильтрации визитов по пациенту и периоду.
+     */
     @Test
     void getPatientVisits_filtersByPatientAndPeriod() {
 

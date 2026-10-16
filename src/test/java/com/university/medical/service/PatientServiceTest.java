@@ -14,6 +14,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Тесты для PatientService.
+ */
 class PatientServiceTest {
 
     private PatientService patientService;
@@ -22,6 +25,9 @@ class PatientServiceTest {
     private Doctor doctor1;
     private Doctor doctor2;
 
+    /**
+     * Подготовка тестовых данных перед каждым тестом.
+     */
     @BeforeEach
     void setUp() {
         patientService = new PatientService();
@@ -31,6 +37,9 @@ class PatientServiceTest {
         doctor2 = new Doctor("D2", "Козлова Е.В.", Specialty.SURGEON);
     }
 
+    /**
+     * Тест успешной записи на приём.
+     */
     @Test
     void bookAppointment_success() {
         Appointment apt = patientService.bookAppointment(
@@ -44,6 +53,9 @@ class PatientServiceTest {
         assertEquals(patient1, apt.patient());
     }
 
+    /**
+     * Тест конфликта при записи к занятому врачу.
+     */
     @Test
     void bookAppointment_sameDoctorSameTime() {
         patientService.bookAppointment(
@@ -63,6 +75,9 @@ class PatientServiceTest {
         assertTrue(e.getMessage().contains("уже занят"));
     }
 
+    /**
+     * Тест конфликта при записи до рабочих часов.
+     */
     @Test
     void bookAppointment_beforeWorkingHours() {
         assertThrows(
@@ -74,6 +89,9 @@ class PatientServiceTest {
         );
     }
 
+    /**
+     * Тест конфликта при записи после рабочих часов.
+     */
     @Test
     void bookAppointment_afterWorkingHours() {
         assertThrows(
@@ -86,6 +104,9 @@ class PatientServiceTest {
         );
     }
 
+    /**
+     * Тест успешной записи встык.
+     */
     @Test
     void bookAppointment_backToBack_success() { //впритык
         patientService.bookAppointment(
@@ -103,6 +124,9 @@ class PatientServiceTest {
         assertNotNull(apt2);
     }
 
+    /**
+     * Тест фильтрации истории по периоду.
+     */
     @Test
     void getPatientAppointments_filterPeriod() {
 
@@ -119,6 +143,9 @@ class PatientServiceTest {
         assertEquals(3, history.size());
     }
 
+    /**
+     * Тест пустой истории за период без записей.
+     */
     @Test
     void getPatientAppointments_filterPeriodNoAppointments() {
 

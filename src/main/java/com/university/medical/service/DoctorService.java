@@ -8,11 +8,32 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Сервис для проведения приёмов врачом.
+ *
+ * <p>Отвечает за:
+ * <ul>
+ *   <li>Проведение приёма (создание визита с диагнозом и назначениями)</li>
+ *   <li>Историю приёмов пациента за период</li>
+ *   <li>Действующие назначения на указанную дату</li>
+ *   <li>Поиск пересекающихся назначений по активному веществу</li>
+ * </ul>
+ */
 
 public class DoctorService {
 
     private final List<Visit> visits = new ArrayList<>();
 
+    /**
+     * Проводит приём: ставит диагноз и назначает лечение.
+     *
+     * @param date          дата и время приёма
+     * @param doctor        врач, проводящий приём
+     * @param patient       пациент
+     * @param diagnosis     текст диагноза
+     * @param prescriptions список назначений
+     * @return созданный визит
+     */
     public Visit conductVisit(LocalDateTime date, Doctor doctor, Patient patient, String diagnosis, List<Prescription> prescriptions ){
         List<MedicalRecord> records = new ArrayList<>();
 
@@ -29,6 +50,14 @@ public class DoctorService {
 
     }
 
+    /**
+     * Возвращает историю приёмов пациента за период.
+     *
+     * @param patient  пациент
+     * @param start    начало периода (включительно)
+     * @param end      конец периода (включительно)
+     * @return неизменяемый список визитов за период
+     */
     public List<Visit> historyVisits (Patient patient, LocalDate start, LocalDate end){
         List<Visit> result = new ArrayList<>();
 
@@ -45,10 +74,22 @@ public class DoctorService {
         return Collections.unmodifiableList(result);
     }
 
+    /**
+     * Возвращает все визиты.
+     *
+     * @return неизменяемый список всех визитов
+     */
     public List<Visit> allHistoryVisits(){
         return Collections.unmodifiableList(visits);
     }
 
+    /**
+     * Возвращает действующие назначения пациента на указанную дату.
+     *
+     * @param patient пациент
+     * @param date    дата для проверки
+     * @return неизменяемый список действующих назначений
+     */
     public List<Prescription> prescriptionHistory(Patient patient, LocalDate date){
         List<Prescription> result = new ArrayList<>();
 
@@ -67,8 +108,23 @@ public class DoctorService {
         return Collections.unmodifiableList(result);
     }
 
+    /**
+     * Пара пересекающихся назначений.
+     *
+     * @param first  первое назначение
+     * @param second второе назначение
+     */
     public record PairMedicine(Prescription first, Prescription second){}
 
+    /**
+     * Ищет пересекающиеся назначения у пациента.
+     * Пересечением считается ситуация, когда два назначения имеют
+     * одинаковое активное вещество и действуют одновременно.
+     *
+     * @param patient пациент
+     * @param date    дата для проверки
+     * @return неизменяемый список пар пересекающихся назначений
+     */
     public List<PairMedicine> havePairMedicine(Patient patient, LocalDate date){
         List<Prescription> active = prescriptionHistory(patient, date);
         List<PairMedicine> pair = new ArrayList<>();
@@ -86,6 +142,11 @@ public class DoctorService {
         return Collections.unmodifiableList(pair);
     }
 
+    /**
+     * Выводит медицинские записи визита с использованием pattern matching.
+     *
+     * @param visit визит для вывода
+     */
     public void printVisitRecords(Visit visit) {
         System.out.println("Визит: " + visit.date());
         System.out.println("Пациент: " + visit.patient().name());
@@ -104,7 +165,5 @@ public class DoctorService {
             System.out.println(output);
         }
     }
-
-
 
 }

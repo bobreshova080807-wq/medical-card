@@ -9,7 +9,27 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Демонстрационное приложение "Медицинская карта пациента".
+ *
+ * <p>Показывает все операции базового и повышенного уровня:
+ * <ul>
+ *   <li>Запись на приём с проверкой конфликтов</li>
+ *   <li>Проведение приёма (диагноз + лечение)</li>
+ *   <li>История приёмов пациента</li>
+ *   <li>Действующие назначения на дату</li>
+ *   <li>Поиск пересекающихся назначений</li>
+ *   <li>Pattern matching с sealed interface</li>
+ * </ul>
+ */
+
 public class Demo {
+
+    /**
+     * Точка входа в приложение.
+     *
+     * @param args аргументы командной строки (не используются)
+     */
     public static void main(String[] args) {
         System.out.println("Медицинская карта пациента \n");
 
@@ -117,12 +137,27 @@ public class Demo {
         System.out.println();
 
         System.out.println("5)Проведение приемов *****\n");
-        Visit visit1 = doctorService.conductVisit(appointment1.date(), appointment1.doctor(), appointment1.patient(), "ОРВИ, острый ранит",
-                List.of(ListMedicine.PARACETAMOL.standartPrescription(LocalDate.of(2026, 10,7)),
-                       (ListMedicine.IBUPROFEN.standartPrescription(LocalDate.of(2026,10,7)))));
+        Visit visit1 = doctorService.conductVisit(
+                appointment1.date(),
+                appointment1.doctor(),
+                appointment1.patient(),
+                "ОРВИ, острый ранит",
+                List.of(
+                        ListMedicine.PARACETAMOL.standartPrescription(LocalDate.of(2026, 10, 7)),
+                        ListMedicine.IBUPROFEN.standartPrescription(LocalDate.of(2026, 10, 7))
+                )
+        );
         System.out.println("Визит 1: " + patient1.name());
         System.out.println("Диагноз: " + visit1.getDiagnosisRecord().getFirst().description());
-        System.out.println("Назначение: " + visit1.getPrescriptionRecord() + "\n");
+
+        System.out.println("Назначения:");
+        for (PrescriptionRecord record : visit1.getPrescriptionRecord()) {
+            System.out.println("  * " + record.prescription().medicine().name()
+                    + " (" + record.prescription().medicine().ingredient() + ")"
+                    + " — " + record.prescription().days() + " дней, "
+                    + record.prescription().numberOfTimes() + " раз(а) в день");
+        }
+        System.out.println();
 
         System.out.println("6)Действующие назначения на дату *****\n");
         LocalDate check = LocalDate.of(2026,10,7);
@@ -168,7 +203,6 @@ public class Demo {
                     visit.getPrescriptionRecord().size() + " назначение(й/я)");
         }
         System.out.println();
-
 
     }
 }
